@@ -24,6 +24,11 @@ describe('CounterApp', () => {
     expect(decrement.attributes('disabled')).toBeDefined()
     expect(increment.attributes('disabled')).not.toBeDefined()
   })
+  it('должно стать доступно уменьшение после увеличения', async () => {
+    expect(decrement.attributes('disabled')).toBeDefined()
+    await increment.trigger('click')
+    expect(decrement.attributes('disabled')).not.toBeDefined()
+  })
 
   it('должно увеличивать значение до 5 после 5 кликов на кнопку увеличения и отключить кнопку увеличения после этого', async () => {
     for (let i = 0; i < 5; i++) {

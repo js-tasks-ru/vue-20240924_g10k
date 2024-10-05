@@ -1,7 +1,6 @@
 @font-face {
   font-family: emoji;
-  src: local('Apple Color Emoji'), local('Android Emoji'), local('Segoe UI Emoji'), local(EmojiSymbols),
-  local(Symbola);
+  src: local('Apple Color Emoji'), local('Android Emoji'), local('Segoe UI Emoji'), local(EmojiSymbols), local(Symbola);
 }
 
 .calculator {

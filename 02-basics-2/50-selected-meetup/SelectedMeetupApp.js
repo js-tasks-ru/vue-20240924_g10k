@@ -55,7 +55,7 @@ export default defineComponent({
         <template v-for="meetupId in meetupIds">
             <div class="radio-group__button" >
               <input
-                :id="meetupIdAttr"
+                :id="meetupIdAttr()"
                 class="radio-group__input"
                 type="radio"
                 name="meetupId"
@@ -63,7 +63,7 @@ export default defineComponent({
                 :checked="currentMeetupId===meetupId"
                 @click="currentMeetupId=meetupId"
               />
-              <label :for="meetupIdAttr" class="radio-group__label">{{meetupId}}</label>
+              <label :for="meetupIdAttr()" class="radio-group__label">{{meetupId}}</label>
             </div>
         </template>
         </div>

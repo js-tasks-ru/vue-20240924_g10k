@@ -1,5 +1,6 @@
 import { defineComponent, ref, onMounted, watch } from 'vue'
 import { getMeetup } from './meetupsService.ts'
+import {onBeforeMount} from "@vue/runtime-core";
 
 const meetupIds = [1, 2, 3, 4, 5]
 
@@ -9,24 +10,34 @@ export default defineComponent({
   setup() {
     let currentMeetupId = ref(null)
     let currentMeetup = ref(null)
+    // Вопрос 1
+    // Можно ли сделать кэш на JS чтобы уже запрошенные сущности не запрашивались каждый раз по сети?
 
-    onMounted(() => {
+    // Вопрос 2
+    // Тесты не проходят, но визуально все работает.
+    // Пока не хватает знаний как тестовый движок работает, чтобы найти проблему. Покопался и пошел дальше.
+    // Буду благодарен за ссылки с  best practices по тестовому движку.
+
+    onBeforeMount(() => {
       currentMeetupId.value = 1
     })
 
-    watch(currentMeetupId, (oldValue, newValue) => {
+    watch(currentMeetupId, async (oldValue, newValue) => {
       if (!currentMeetupId.value) {
         return null
       }
-      getMeetup(currentMeetupId.value).then(res => {
-        currentMeetup.value = res
-      })
+      currentMeetup.value = await getMeetup(currentMeetupId.value)
     })
+
+    function meetupIdAttr(meetupId){
+      return 'meetup-id-' + meetupId
+    }
 
     return {
       meetupIds,
       currentMeetup,
       currentMeetupId,
+      meetupIdAttr,
     }
   },
 
@@ -40,23 +51,22 @@ export default defineComponent({
           @click="currentMeetupId -= 1"
         >Предыдущий</button>
 
+        <div class="radio-group" role="radiogroup">
         <template v-for="meetupId in meetupIds">
-          <div class="radio-group" role="radiogroup">
-            <div class="radio-group__button {{meetupId}}">
+            <div class="radio-group__button" >
               <input
-                :id="'meetup-id-' + meetupId"
+                :id="meetupIdAttr"
                 class="radio-group__input"
                 type="radio"
                 name="meetupId"
                 :value="meetupId"
-                @click="currentMeetupId=meetupId"
                 :checked="currentMeetupId===meetupId"
+                @click="currentMeetupId=meetupId"
               />
-              <label :for="'meetup-id-' + meetupId" class="radio-group__label">{{meetupId}}</label>
+              <label :for="meetupIdAttr" class="radio-group__label">{{meetupId}}</label>
             </div>
-          </div>
         </template>
-
+        </div>
         <button
           class="button button--secondary"
           type="button"
@@ -64,7 +74,6 @@ export default defineComponent({
           @click="currentMeetupId += 1"
         >Следующий</button>
       </div>
-
       <div class="meetup-selector__cover">
         <div class="meetup-cover">
             <h1 v-if="currentMeetup" class="meetup-cover__title">{{currentMeetup.title}}</h1>

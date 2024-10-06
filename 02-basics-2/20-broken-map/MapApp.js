@@ -1,39 +1,40 @@
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, ref, watch, reactive, computed } from 'vue'
 
 export default defineComponent({
   name: 'MapApp',
 
   setup() {
-    // Реактивные переменные для хранения координат метки
-    let x = ref(0)
-    let y = ref(0)
+    // Вопрос.
+    // Если явно использовать reactive вместо ref, то не нужно в js коде везде  добавлять `.value`.
+    // Ни для кого это не проблема? Общепринято, что проще всегда использовать ref + .value нежели думать
+    // reactive или ref там был использован?
+    let mousePointer = ref({ x: 0, y: 0 })
 
     /**
      * Обработчик клика по карте для установки координат метки
      * @param {MouseEvent} event
      */
     function handleClick(event) {
-      x = event.offsetX
-      y = event.offsetY
+      mousePointer.value.x = event.offsetX
+      mousePointer.value.y = event.offsetY
     }
-
-    // Следим за X и Y для установки нового положения
-    watch([x, y], () => {
-      // Находим метку и изменяем её положение
-      const map = document.querySelector('.pin')
-      map.style.left = `${x}px`
-      map.style.top = `${y}px`
+    let computedStyle = computed(() => {
+      return {
+        left: mousePointer.value.x + 'px',
+        top: mousePointer.value.y + 'px',
+      }
     })
 
     return {
       handleClick,
+      computedStyle,
     }
   },
 
   template: `
     <div class="map" @click="handleClick">
       <img class="map-image" src="./map.png" alt="Map" draggable="false" />
-      <span class="pin">📍</span>
+      <span class="pin" :style="computedStyle">📍</span>
     </div>
   `,
 })

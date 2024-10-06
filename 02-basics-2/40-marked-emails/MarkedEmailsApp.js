@@ -32,19 +32,35 @@ export const emails = [
 export default defineComponent({
   name: 'MarkedEmailsApp',
 
-  setup() {},
+  setup() {
+    let searchString = ref('')
+
+    function isMatch(email) {
+      if (!searchString.value.length) {
+        return false
+      }
+      // если ввести * будет ошибка, как-то экранировать спец. символы регулярки? Но это в целом про js, а не vue
+
+      // Вопрос.
+      // где закешировать регулярку, чтобы не генерить ее на каждый email, каждый раз, когда меняется шаблон
+      return new RegExp(`${searchString.value}`).test(email)
+    }
+    return {
+      searchString,
+      emails,
+      isMatch,
+    }
+  },
 
   template: `
     <div>
       <div class="form-group">
-        <input type="search" aria-label="Search" />
+        <input type="search" aria-label="Search" v-model="searchString"/>
       </div>
-      <ul aria-label="Emails">
-        <li>
-          Eliseo@gardner.biz
-        </li>
-        <li class="marked">
-          Jayne_Kuhic@sydney.com
+
+      <ul aria-label="Emails" v-for="email in emails">
+        <li :class="{marked: isMatch(email)}">
+          {{email}}
         </li>
       </ul>
     </div>

@@ -13,12 +13,29 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    index: {
+      type: Number,
+      required: true
+    },
+    removeValue: {
+      type: Function
+    }
+  },
+  emits: ['removeItem'],
+
+  setup(props, {emit}){
+    function handleClick(index){
+      emit('removeItem')
+    }
+    return {
+      handleClick
+    }
   },
 
   template: `
     <li :class="{ marked }">
-      {{ email }}
-      <button type="button" aria-label="Удалить" @click.stop>❌</button>
+      {{ email }} {{index}}
+      <button type="button" aria-label="Удалить" @click.stop="handleClick">❌</button>
     </li>
   `,
 })

@@ -15,20 +15,20 @@ export default defineComponent({
     },
     index: {
       type: Number,
-      required: true
+      required: true,
     },
     removeValue: {
-      type: Function
-    }
+      type: Function,
+    },
   },
   emits: ['removeItem'],
 
-  setup(props, {emit}){
-    function handleClick(index){
+  setup(props, { emit }) {
+    function handleClick(index) {
       emit('removeItem')
     }
     return {
-      handleClick
+      handleClick,
     }
   },
 

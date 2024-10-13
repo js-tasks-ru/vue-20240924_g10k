@@ -11,32 +11,32 @@ export default defineComponent({
   props: {
     count: {
       type: Number,
-      required: true
+      required: true,
     },
     min: {
       type: Number,
       required: false,
-      default:0
+      default: 0,
     },
     max: {
       type: Number,
       required: false,
-      default:Infinity
+      default: Infinity,
     },
   },
   emits: ['update:count'],
-  setup(props, {emit}) {
+  setup(props, { emit }) {
     // Рекомендуется для практики реализовать обработку событий внутри setup, а не непосредственно в шаблоне
     // передавал +1 или -1, и тесты не проходили, не понял почему((
-    function decreaseCount(){
+    function decreaseCount() {
       emit('update:count', props.count - 1)
     }
-    function increaseCount(){
+    function increaseCount() {
       emit('update:count', props.count + 1)
     }
     return {
       decreaseCount,
-      increaseCount
+      increaseCount,
     }
   },
 

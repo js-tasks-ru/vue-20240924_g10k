@@ -1,6 +1,6 @@
 import { defineComponent, ref, onMounted, watch } from 'vue'
 import { getMeetup } from './meetupsService.ts'
-import {onBeforeMount} from "@vue/runtime-core";
+import { onBeforeMount } from '@vue/runtime-core'
 
 const meetupIds = [1, 2, 3, 4, 5]
 
@@ -29,7 +29,7 @@ export default defineComponent({
       currentMeetup.value = await getMeetup(currentMeetupId.value)
     })
 
-    function meetupIdAttr(meetupId){
+    function meetupIdAttr(meetupId) {
       return 'meetup-id-' + meetupId
     }
 

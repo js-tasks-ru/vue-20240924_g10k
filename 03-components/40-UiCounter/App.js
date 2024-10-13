@@ -19,10 +19,10 @@ export default defineComponent({
       count2.value = 2
     }
 
-    function updateCount1(n){
+    function updateCount1(n) {
       count1.value = n
     }
-    function updateCount2(n){
+    function updateCount2(n) {
       count2.value = n
     }
 

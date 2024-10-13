@@ -16,6 +16,7 @@
 📝 Для решения задачи отредактируйте файл: `WeatherApp.js`.
 
 🚀 Команда запуска для ручного тестирования: `npm run dev`\
-Приложение будет доступно на [http://localhost:5173/03-components/50-weather-components/](http://localhost:5173/03-components/50-weather-components/).
+Приложение будет доступно на
+[http://localhost:5173/03-components/50-weather-components/](http://localhost:5173/03-components/50-weather-components/).
 
 ✅ Доступно автоматическое тестирование: `npm test weather-components`

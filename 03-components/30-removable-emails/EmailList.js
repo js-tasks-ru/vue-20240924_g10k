@@ -15,8 +15,8 @@ export default defineComponent({
     },
     // передал коллбеком для разнообразия
     removeIndex: {
-      type: Function
-    }
+      type: Function,
+    },
   },
 
   template: `

@@ -15,7 +15,7 @@ export default defineComponent({
       type: Object,
       required: true,
       // как указать, что 1) ожидается agenda 2) ее с length > 1
-    }
+    },
   },
   components: {
     MeetupDescription,

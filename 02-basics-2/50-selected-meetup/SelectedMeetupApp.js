@@ -10,24 +10,22 @@ export default defineComponent({
   setup() {
     let currentMeetupId = ref(null)
     let currentMeetup = ref(null)
-    // Вопрос 1
-    // Можно ли сделать кэш на JS чтобы уже запрошенные сущности не запрашивались каждый раз по сети?
-
-    // Вопрос 2
-    // Тесты не проходят, но визуально все работает.
-    // Пока не хватает знаний как тестовый движок работает, чтобы найти проблему. Покопался и пошел дальше.
-    // Буду благодарен за ссылки с  best practices по тестовому движку.
+    // Вопрос.
+    // Можно ли сделать кэш на JS, чтобы уже запрошенные сущности не запрашивались каждый раз по сети?
 
     onBeforeMount(() => {
       currentMeetupId.value = 1
     })
 
-    watch(currentMeetupId, async (oldValue, newValue) => {
-      if (!currentMeetupId.value) {
-        return null
-      }
-      currentMeetup.value = await getMeetup(currentMeetupId.value)
-    })
+    watch(
+      currentMeetupId,
+      async (newValue, oldValue) => {
+        if (!currentMeetupId.value) {
+          return null
+        }
+        currentMeetup.value = await getMeetup(currentMeetupId.value)
+      },
+    )
 
     function meetupIdAttr(meetupId) {
       return 'meetup-id-' + meetupId
@@ -55,15 +53,15 @@ export default defineComponent({
         <template v-for="meetupId in meetupIds">
             <div class="radio-group__button" >
               <input
-                :id="meetupIdAttr()"
+                :id="meetupIdAttr(meetupId)"
                 class="radio-group__input"
                 type="radio"
                 name="meetupId"
                 :value="meetupId"
                 :checked="currentMeetupId===meetupId"
-                @click="currentMeetupId=meetupId"
+                @change="currentMeetupId=meetupId"
               />
-              <label :for="meetupIdAttr()" class="radio-group__label">{{meetupId}}</label>
+              <label :for="meetupIdAttr(meetupId)" class="radio-group__label">{{meetupId}}</label>
             </div>
         </template>
         </div>

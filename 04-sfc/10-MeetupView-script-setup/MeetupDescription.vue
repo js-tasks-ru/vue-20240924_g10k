@@ -1,14 +1,6 @@
-<script>
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'MeetupDescription',
-
-  props: {
-    description: {
-      type: String,
-    },
-  },
+<script setup>
+const props = defineProps({
+  description: String,
 })
 </script>
 

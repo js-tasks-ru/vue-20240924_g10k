@@ -13,6 +13,10 @@ export default defineComponent({
       type: Array,
       required: true,
     },
+    // передал коллбеком для разнообразия
+    removeIndex: {
+      type: Function,
+    },
   },
 
   template: `
@@ -21,6 +25,8 @@ export default defineComponent({
         v-for="({ email, isMarked }, index) in emails"
         :key="email"
         :email="email"
+        :index="index"
+        @removeItem="() => removeIndex(index)"
         :marked="isMarked"
       />
     </ul>
